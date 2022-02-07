@@ -15,7 +15,7 @@ while(1):
     tagList[cnt] = text
     cnt += 1
     
-input('輸入任意值以開始記錄時間戳記...')
+input('按Enter以開始記錄時間戳記...')
 recordLog.append([time.localtime(), 0, '--開始--'])
 ST_TIME = int(time.time())
 
@@ -45,9 +45,14 @@ while(1):
     
 c = input('是否校正紀錄起始時間點? Y/N : ')
 while c.upper() == 'Y':
-    stTime = input('請輸入影片開始時間 : ')
+    stTime = input('請輸入影片開始時間(YYYY-MM-DD HH24:MI:SS) : ')
+    try:
+        inputTime = time.mktime(time.strptime(stTime, "%Y-%m-%d %H:%M:%S"))
+    except:
+        print('師入時間格式錯誤，請重新輸入...')
+        continue
     for line in recordLog:
-        deltaTime = int(time.mktime(line[0])) - int(time.mktime(time.strptime(stTime, "%Y-%m-%d %H:%M:%S")))
+        deltaTime = int(time.mktime(line[0])) - int(inputTime)
         if deltaTime < 0:
             line[1] = '##'
         else:
@@ -70,4 +75,4 @@ with open(filename + '.txt', 'r', encoding = 'utf8') as recordFile:
     for line in recordFile:
         print(line, end= "")
     recordFile.close()
-input('輸入任意值以離開程式...')
+input('按Enter以離開程式...')
