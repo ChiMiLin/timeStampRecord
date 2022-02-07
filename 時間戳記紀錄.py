@@ -49,7 +49,7 @@ while c.upper() == 'Y':
     try:
         inputTime = time.mktime(time.strptime(stTime, "%Y-%m-%d %H:%M:%S"))
     except:
-        print('師入時間格式錯誤，請重新輸入...')
+        print('輸入時間格式錯誤，請重新輸入...')
         continue
     for line in recordLog:
         deltaTime = int(time.mktime(line[0])) - int(inputTime)
